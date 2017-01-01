@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Loan Calculator</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="present_value">Present Value</string>
+    <string name="rate">Rate (year)</string>
+    <string name="periods">Periods (year)</string>
+
+    <string name="total">Total</string>
+    <string name="interest">Interest</string>
+    <string name="interest_per_month">Interest (Month)</string>
+
+    <string name="principle_paid">Principle was paid</string>
+    <string name="interest_paid">Interest was paid</string>
+    <string name="remain_principle">Remain present value</string>
+
+
+
+</resources>
