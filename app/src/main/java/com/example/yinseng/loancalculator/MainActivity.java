@@ -100,27 +100,28 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    private void calculate(double pv, double r, int nper) {
+    private void calculate(double pv, double r, double nper) {
 
         double interest = 0, principle = 0, payment = 0;
         double total = pv;
         double total_interest = 0;
         double total_principle = 0;
 
-        nper = nper * 12;
+        int _nper =(int)( nper * 12);
+
 
         loan_list.clear();
         result_seperate_list.clear();
 
-        for (int i = 0; i < nper; i++) {
+        for (int i = 0; i < _nper; i++) {
 
             int per = i + 1;
 
-            interest = Finance.ipmt(r / 12, per, nper, pv);
+            interest = Finance.ipmt(r / 12, per, _nper, pv);
 //            Log.e("loan", interest + "");
-            principle = Finance.ppmt(r / 12, per, nper, pv);
+            principle = Finance.ppmt(r / 12, per, _nper, pv);
 //            Log.e("loan", principle + "");
-            payment = Finance.pmt(r / 12, nper, pv);
+            payment = Finance.pmt(r / 12, _nper, pv);
 //            Log.e("loan", payment + "");
 
 
@@ -141,9 +142,9 @@ public class MainActivity extends AppCompatActivity implements
             result_seperate_list.add(new ResultSeperate(total_principle,total_interest,total));
 
         }
-        double total_principle_interest = payment * nper;
+        double total_principle_interest = payment * _nper;
 
-        loan_list.add(new Result(total_principle_interest,  pv-total_principle_interest, ( pv-total_principle_interest) / nper));
+        loan_list.add(new Result(total_principle_interest,  pv-total_principle_interest, ( pv-total_principle_interest) / _nper));
 
         mAdapter.notifyDataSetChanged();
     }
@@ -209,8 +210,6 @@ public class MainActivity extends AppCompatActivity implements
     public void OnClick(Object object) {
         Loan loan = (Loan) object;
         openDialog(loan);
-
-
         Log.e("laon", loan.getTotal() + "");
     }
 
@@ -234,9 +233,10 @@ public class MainActivity extends AppCompatActivity implements
             // calculate continue
             double pv = Double.parseDouble(et_pv.getText().toString());
             double r = Double.parseDouble(et_rate.getText().toString()); // per year
-            int nper = Integer.parseInt(et_nper.getText().toString());   // per year
+            double nper = Double.parseDouble(et_nper.getText().toString());   // per year
+            int _nper =(int)( nper * 12);
 
-            calculate(resultSeperate.getRemain_present_value() - amount, r / 100, nper *12 -loan.getMonth_no(),loan.getMonth_no(),result);
+            calculate(resultSeperate.getRemain_present_value() - amount, r / 100, _nper  -loan.getMonth_no(),loan.getMonth_no(),result);
 
             mAdapter.notifyDataSetChanged();
             dialog.dismiss();
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements
         if (validate()) {
             double pv = Double.parseDouble(et_pv.getText().toString());
             double r = Double.parseDouble(et_rate.getText().toString()); // per year
-            int nper = Integer.parseInt(et_nper.getText().toString());   // per year
+            double nper = Double.parseDouble(et_nper.getText().toString());   // per year
 
             calculate(pv, r / 100, nper);
         }
